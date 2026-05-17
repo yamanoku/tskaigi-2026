@@ -13,7 +13,7 @@ export function render(data) {
         <meta name="twitter:site" content="@yamanoku">
         <meta name="twitter:image:alt" content="">
         <meta property="og:locale" content="${data.lang}">
-        <link rel="stylesheet" href="https://cdn.skypack.dev/yama-normalize">
+        <link rel="stylesheet" href="https://unpkg.com/yama-normalize@2.6.1">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/a11y-dark.min.css">
         <script type="module">hljs.highlightAll();</script>
@@ -26,7 +26,7 @@ export function render(data) {
         </main>
         <footer>
           <p>Copyright ${this.year()}, Okuto Oyama</p>
-          <p>Source : <a href="https://github.com/yamanoku/document-page-template/" target="_blank">yamanoku/document-page-template</a></p>
+          <p>Source : <a href="https://github.com/yamanoku/tskaigi-2026/" target="_blank">yamanoku/tskaigi-2026</a></p>
         </footer>
       </body>
     </html>
