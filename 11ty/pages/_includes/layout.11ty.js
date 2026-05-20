@@ -1,4 +1,5 @@
 export function render(data) {
+  const ogpImage = data.lang === 'ja' ? `<meta name="og:image" content="https://yamanoku.net/tskaigi-2026/images/ogp-image-ja.png">` : `<meta name="og:image" content="https://yamanoku.net/tskaigi-2026/images/ogp-image-en.png">`;
   return `
     <!doctype html>
     <html lang="${data.lang}">
@@ -8,15 +9,16 @@ export function render(data) {
         <title>${data.title}</title>
         <meta name="og:title" content="${data.title}">
         <meta name="og:description" content="${data.description}">
-        <meta name="og:image" content="">
+        ${ogpImage}
         <meta name="twitter:card" content="summary_large_image">
         <meta name="twitter:site" content="@yamanoku">
-        <meta name="twitter:image:alt" content="">
+        <meta name="twitter:image:alt" content="${data.title}">
         <meta property="og:locale" content="${data.lang}">
         <link rel="stylesheet" href="https://unpkg.com/yama-normalize@2.6.1">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/a11y-dark.min.css">
         <script type="module">hljs.highlightAll();</script>
+        <script src="https://cdn.jsdelivr.net/npm/baseline-status@1/baseline-status.min.js" type="module"></script>
         <style>code{font-family:SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;font-size:1em;}pre code.hljs{padding:var(--y-rhythm-3)}</style>
       </head>
       <body>
