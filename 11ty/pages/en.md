@@ -7,6 +7,10 @@ lang: en
 
 ![Slide Title: The Path to Navigation API Being Adopted in lib.dom.d.ts](../images/title-en.png)
 
+## Slide
+
+[Presentation slides (Japanese Only)](https://yamanoku.net/tskaigi-2026/slide/)
+
 ## Translation Articles
 
 [English page](https://yamanoku.net/tskaigi-2026/en/) / [日本語ページ](https://yamanoku.net/tskaigi-2026/ja/)
@@ -154,7 +158,7 @@ With the release of TypeScript 6.0 in March 2026, Navigation API type definition
 <blockquote class="bluesky-embed" data-bluesky-uri="at://did:plc:frnie37ggus7uztcldk3hxxf/app.bsky.feed.post/3mghnwiit6c2b" data-bluesky-cid="bafyreibxwf23xghf2twffwzvljnpb6e4hc6udtq7ps2yjigla2k2zzqz3i" data-bluesky-embed-color-mode="system"><p lang="en">With TypeScript 6.0 moving toward keeping the DOM API definitions up to date, the type definitions for the Navigation API are now officially available in TypeScript 6.0 🥳
 I hope this will encourage more client-side routing libraries to adopt the Navigation API 🙌<br><br><a href="https://bsky.app/profile/did:plc:frnie37ggus7uztcldk3hxxf/post/3mghnwiit6c2b?ref_src=embed">[image or embed]</a></p>&mdash; yamanoku (<a href="https://bsky.app/profile/did:plc:frnie37ggus7uztcldk3hxxf?ref_src=embed">@yamanoku.net</a>) <a href="https://bsky.app/profile/did:plc:frnie37ggus7uztcldk3hxxf/post/3mghnwiit6c2b?ref_src=embed">2026年3月7日 19:52</a></blockquote><script async src="https://embed.bsky.app/static/embed.js" charset="utf-8"></script>
 
-Web APIs have their cross-browser support status indicated by a metric called "[Baseline](https://web.dev/baseline)." Currently it is Newly Available, supported only in the latest browser versions, but by July 2028 it is expected to become Baseline Widely Available, meaning it will be considered generally stable for widespread use.
+Web APIs have their cross-browser support status indicated by a metric called "[Baseline](https://web.dev/baseline)". Currently it is Newly Available, supported only in the latest browser versions, but by July 2028 it is expected to become Baseline Widely Available, meaning it will be considered generally stable for widespread use.
 
 Now that the Navigation API is stably available in the latest browsers and its types are available in TypeScript, I personally hope to see it adopted more widely going forward.
 

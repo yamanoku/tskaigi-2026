@@ -7,6 +7,10 @@ lang: ja
 
 ![スライドタイトル：Navigation APIがlib.dom.d.tsに採用されるまでの道のり](../images/title-ja.png)
 
+## スライド
+
+[発表スライド](https://yamanoku.net/tskaigi-2026/slide/)
+
 ## 翻訳記事一覧
 
 [日本語ページ](https://yamanoku.net/tskaigi-2026/ja/) / [English page](https://yamanoku.net/tskaigi-2026/en/)
