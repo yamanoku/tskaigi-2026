@@ -1,9 +1,9 @@
 {
-  "name": "public-presentations-template-slidev",
+  "name": "tskaigi-2026-slidev",
   "type": "module",
   "private": true,
   "scripts": {
-    "build": "slidev build --base /public-presentations-template/slide/ --out ../docs/slide/",
+    "build": "slidev build --base /tskaigi-2026/slide/ --out ../docs/slide/",
     "dev": "slidev --open",
     "export": "slidev export"
   },
