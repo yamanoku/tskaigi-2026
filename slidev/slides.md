@@ -7,7 +7,7 @@ fonts:
   sans: Roboto, "Noto Sans JP"
 seoMeta:
   ogDescription: TSKaigi 2026のyamanokuの発表資料
-  ogImage: https://yamanoku.net/tskaigi-2026/images/og-image-ja.png
+  ogImage: https://yamanoku.net/tskaigi-2026/images/ogp-image-ja.png
   twitterCard: summary_large_image
 routerMode: hash
 htmlAttrs:
