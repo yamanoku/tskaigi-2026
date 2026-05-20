@@ -7,7 +7,7 @@ fonts:
   sans: Roboto, "Noto Sans JP"
 seoMeta:
   ogDescription: TSKaigi 2026のyamanokuの発表資料
-  ogImage: https://yamanoku.net/tskaigi-2026/images/og-image.png
+  ogImage: https://yamanoku.net/tskaigi-2026/images/ogp-image-ja.png
   twitterCard: summary_large_image
 routerMode: hash
 htmlAttrs:
@@ -16,11 +16,12 @@ htmlAttrs:
 
 <h1 mt="8">Navigation APIが<br><code>lib.dom.d.ts</code>に<br>採用されるまでの道のり</h1>
 
-<div mt="4">
+<div mt="4" mb="4">
 TSKaigi 2026 | <time datetime="2026-05-22">2026-05-22</time>
 </div>
 
-[ドキュメントページ](https://yamanoku.net/tskaigi-2026/ja/)
+- [ドキュメントページ版（日本語）](https://yamanoku.net/tskaigi-2026/ja/)
+- [Document Page Version（English）](https://yamanoku.net/tskaigi-2026/en/)
 
 <div class="absolute bottom-16">
   <span class="text-6 font-700">
