@@ -1,0 +1,259 @@
+
+    <!doctype html>
+    <html lang="ja">
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Navigation APIがlib.dom.d.tsに採用されるまでの道のり</title>
+        <meta name="og:title" content="Navigation APIがlib.dom.d.tsに採用されるまでの道のり">
+        <meta name="og:description" content="TSKaigi 2026のyamanokuの発表資料">
+        <meta name="og:image" content="https://yamanoku.net/tskaigi-2026/images/ogp-image-ja.png">
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:site" content="@yamanoku">
+        <meta name="twitter:image:alt" content="Navigation APIがlib.dom.d.tsに採用されるまでの道のり">
+        <meta property="og:locale" content="ja">
+        <link rel="stylesheet" href="https://unpkg.com/yama-normalize@2.6.1">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/a11y-dark.min.css">
+        <script type="module">hljs.highlightAll();</script>
+        <script src="https://cdn.jsdelivr.net/npm/baseline-status@1/baseline-status.min.js" type="module"></script>
+        <style>code{font-family:SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;font-size:1em;}pre code.hljs{padding:var(--y-rhythm-3)}</style>
+      </head>
+      <body>
+        <main id="main">
+          <h1><span style="word-break:keep-all;overflow-wrap:anywhere">Navigation APIが​lib.dom.d.tsに​採用されるまでの​道のり</span></h1>
+          <p><img src="../images/title-ja.png" alt="スライドタイトル：Navigation APIがlib.dom.d.tsに採用されるまでの道のり"></p>
+<h2>翻訳記事一覧</h2>
+<p><a href="https://yamanoku.net/tskaigi-2026/ja/">日本語ページ</a> / <a href="https://yamanoku.net/tskaigi-2026/en/">English page</a></p>
+<h2>発表概要</h2>
+<p>皆さんは「Navigation API」をご存じでしょうか？</p>
+<p>SPAのクライアントサイドルーティングを実現するために使われるHistory APIの後継のWeb APIです。昨年のInteropプロジェクトでの採用を経て、今年1月よりすべての主要ブラウザにて利用可能になりました。</p>
+<p>しかしこのような最新のWeb APIを使おうとしたら型が未定義で、自ら<code>interface Window</code>を拡張した経験は皆さんはありませんか？</p>
+<p>本セッションでは、Navigation APIの概要を紹介しつつ、普段何気なく利用しているDOM APIがどのようなフローでTypeScriptでの型定義（lib.dom.d.ts）に採用されるのかを解説します。</p>
+<p>この発表を通じて、Web標準の技術が「型」として届けられるまでの裏側を知り、最新技術をより安全かつ深く理解して扱えるようになることを目指します。</p>
+<h2>スライド内容</h2>
+<p>本日はNavigation APIがTypeScriptの型定義に採用されるまでの道のりについてをお話しします。Web標準の技術が、どのようにしてTypeScriptの『型』として私たちの手元に届くのかをご紹介します。</p>
+<p>まずはじめに、皆さんはNavigation APIをご存じでしょうか？</p>
+<p>Navigation APIはSPAのクライアントサイドルーティングを実現するための、History APIの後継となる新しいDOM APIです。これまでのHistory APIは柔軟性に欠け、OS固有の制約から扱いづらい面がありました。Navigation APIはその問題点を解消し、より柔軟なクライアントサイドルーティングを実現します。2026年1月にすべての主要ブラウザで利用可能になっています。</p>
+<p><baseline-status style="border: 1px solid" featureId="navigation"></baseline-status></p>
+<p>History APIの課題としては、<code>pushState</code> / <code>replaceState</code> の柔軟性の欠如、ページ遷移のインターセプトの困難さ（フォーム送信のハンドリングが煩雑、離脱確認の実装が不安定）、そしてフォーカス位置の保存・復元の手法が確立されていないことが挙げられます。</p>
+<p>Navigation APIには3つの主要な特徴があります。まず履歴管理の明確化です。<code>navigation.entries()</code>で履歴エントリの一覧を取得でき、各エントリに一意の<code>key</code>と<code>id</code>が付与されます。</p>
+<p>次にインターセプト処理です。<code>navigate</code>イベントを使って、ページ遷移前やフォーム送信時に明示的に処理を差し込むことができます。</p>
+<pre><code class="language-typescript">navigation.addEventListener('navigate', (event) =&gt; {
+  if (!event.canIntercept) return;
+
+  event.intercept({
+    handler: async () =&gt; {
+      // ページ遷移前に処理を差し込める
+      await loadPageContent(event.destination.url);
+    },
+  });
+});
+</code></pre>
+<p>そして3つ目として、フォーカス位置の復元が容易になったことも特徴として挙げられます。フォーカス位置を状態として保存し、イベントが発火したときに復元する実装が可能になりました。</p>
+<pre><code class="language-typescript">// 遷移前にフォーカス位置を保存
+navigation.updateCurrentEntry({
+  state: { focusedId: document.activeElement?.id },
+});
+
+// 復元処理
+navigation.addEventListener('currententrychange', () =&gt; {
+  const state = navigation.currentEntry.getState();
+  if (state?.focusedId) {
+    document.getElementById(state.focusedId)?.focus();
+  }
+});
+</code></pre>
+<p>非常に便利になったNavigation API、これをTypeScript環境で使おうとしたときにある問題が発生しました。</p>
+<p>それは、TypeScript 5.9までNavigation APIの型定義はTypeScript本体には存在していませんでした。新たなDOM APIを試してみようとしたとき、壁にぶつかった経験がある方もいるのではないでしょうか。</p>
+<p>DOM APIの型定義がない場合、いくつかのアプローチがあります。</p>
+<p>まずはDefinitelyTypedを利用することです。Navigation APIの場合は<a href="https://www.npmjs.com/package/@types/dom-navigation"><code>@types/dom-navigation</code></a>というパッケージが存在していました。</p>
+<pre><code class="language-sh">npm i -D @types/dom-navigation
+yarn add -D @types/dom-navigation
+pnpm add -D @types/dom-navigation
+bun add -d @types/dom-navigation
+</code></pre>
+<p>しかしAPIによってはDefinitelyTypedにパッケージが存在しない場合もあります。その場合は仕様を見つつ自前で<code>Window</code>インターフェースを拡張するか、一時的に<code>@ts-ignore</code>でエラーを握りつぶすしかありません。</p>
+<p>そもそもTypeScriptにおけるDOM APIの型定義はどうやって作られているのでしょうか。</p>
+<p><code>lib.dom.d.ts</code>は手書きではなく、<a href="https://github.com/microsoft/TypeScript-DOM-lib-generator">TypeScript-DOM-lib-generator</a>というツールによって自動生成されています。<a href="https://github.com/mdn/browser-compat-data">Browser-Compat-Data</a>を互換性データを条件とし、Web仕様から型定義を生成し、TypeScriptリポジトリで定期的に実行されます。</p>
+<p>DOM APIがTypeScriptの型定義として採用される条件は「2つ以上のブラウザエンジンでサポートされていること」です。ChromeとEdgeは同じChromiumエンジンのためカウントは1です。ここにFirefoxかSafariのどちらかで実装されて初めて条件がクリアされます。</p>
+<table>
+<thead>
+<tr>
+<th>ブラウザ</th>
+<th>エンジン</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chrome</td>
+<td>Blink (Chromium)</td>
+</tr>
+<tr>
+<td>Edge</td>
+<td>Blink (Chromium)</td>
+</tr>
+<tr>
+<td>Firefox</td>
+<td>Gecko</td>
+</tr>
+<tr>
+<td>Safari</td>
+<td>WebKit</td>
+</tr>
+</tbody>
+</table>
+<p>型定義の生成に必要になるソースはWeb IDLから取得してきます。これはWeb APIのインターフェースを定義するための記述言語です。</p>
+<p>仕様書から直接取得するのではなく、<code>@webref</code>というWebブラウザ仕様から抽出した機械可読なパッケージ群がデータソースとして活用されて、型生成が行われます。</p>
+<table>
+<thead>
+<tr>
+<th>パッケージ</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>@webref/idl</code></td>
+<td>WebIDL仕様の取得</td>
+</tr>
+<tr>
+<td><code>@webref/css</code></td>
+<td>CSS仕様の取得</td>
+</tr>
+<tr>
+<td><code>@webref/events</code></td>
+<td>イベント仕様の取得</td>
+</tr>
+<tr>
+<td><code>@webref/elements</code></td>
+<td>HTML要素の取得</td>
+</tr>
+</tbody>
+</table>
+<p>そのあと生成された型情報は実行環境のコンテキストごとにnpmへ公開されます。メインスレッド向けの<code>@types/web</code>をはじめ、<code>@types/serviceworker</code>・<code>@types/audioworklet</code>・<code>@types/sharedworker</code>・<code>@types/webworker</code>など、各コンテキスト向けの型定義が提供されています。</p>
+<table>
+<thead>
+<tr>
+<th>パッケージ</th>
+<th>説明</th>
+<th>コンテキスト</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>@types/web</code></td>
+<td>DOMおよびWeb技術の型</td>
+<td>Window/メインスレッド</td>
+</tr>
+<tr>
+<td><code>@types/serviceworker</code></td>
+<td>Service Workerのグローバルスコープの型</td>
+<td>Service Worker</td>
+</tr>
+<tr>
+<td><code>@types/audioworklet</code></td>
+<td>Audio Workletのグローバルスコープの型</td>
+<td>Audio Worklet</td>
+</tr>
+<tr>
+<td><code>@types/sharedworker</code></td>
+<td>Shared Workerのグローバルスコープの型</td>
+<td>Shared Worker</td>
+</tr>
+<tr>
+<td><code>@types/webworker</code></td>
+<td>Web Workerのグローバルスコープの型</td>
+<td>Web Worker</td>
+</tr>
+</tbody>
+</table>
+<p>これらはTypeScriptのlib replacement機能を活用して<code>@types/web</code>を導入することで、TypeScriptの標準型定義よりも新しいDOM APIの型を利用できます。もし本体側に型定義がない場合は、<code>@types/web</code>を導入することで解決できる場合もあります。</p>
+<pre><code class="language-sh">npm i -D @typescript/lib-dom@npm:@types/web
+yarn add -D @typescript/lib-dom@npm:@types/web
+pnpm add -D @typescript/lib-dom@npm:@types/web
+bun add -d @typescript/lib-dom@npm:@types/web
+</code></pre>
+<p>どのようにTypeScriptの型定義として採用されるかが分かりましたでしょうか。最後にNavigation APIのこれまでのタイムラインを振り返ってみましょう。</p>
+<table>
+<thead>
+<tr>
+<th>年</th>
+<th>出来事</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2022年5月</td>
+<td>Chrome / Edgeで実装完了</td>
+</tr>
+<tr>
+<td>2023年10月</td>
+<td>Interop 2023 への申請も採用ならず</td>
+</tr>
+<tr>
+<td>2023年3月</td>
+<td>TypeScript側のリポジトリにサポート要望のIssueが登場</td>
+</tr>
+<tr>
+<td>2023年9月</td>
+<td>Interop 2024 への申請も採用ならず</td>
+</tr>
+<tr>
+<td>2025年2月</td>
+<td>Interop 2025のフォーカス対象として採用</td>
+</tr>
+<tr>
+<td>2025年12月</td>
+<td>Safari で Navigation API が実装</td>
+</tr>
+<tr>
+<td>2026年1月</td>
+<td>Firefox で Navigation API が実装</td>
+</tr>
+<tr>
+<td>2026年1月</td>
+<td>Navigation APIがBaseline Newly Availableに</td>
+</tr>
+<tr>
+<td>2026年2月</td>
+<td>Interop 2026のフォーカス対象として採用</td>
+</tr>
+<tr>
+<td>2026年3月</td>
+<td>TypeScript 6.0でNavigation APIの型定義が追加</td>
+</tr>
+<tr>
+<td>2028年7月</td>
+<td>Navigation APIがBaseline Widely Availableになる見込み</td>
+</tr>
+</tbody>
+</table>
+<p>仕様が提案され、最初に2022年5月にChrome / Edgeで実装が完了しました。その後InteropというクロスブラウザにてWeb APIが動作できるようにする相互運用性向上プロジェクトにて、このAPIを対象とする申請されました。ですが、2023年・2024年はいずれも採択されませんでした。2023年3月には<a href="https://github.com/microsoft/TypeScript-DOM-lib-generator/issues/1531">TypeScript側のリポジトリにNavigation APIサポート要望のIssue</a>が立ち上がっています。</p>
+<p>転機となったのは2025年で、<a href="https://github.com/web-platform-tests/interop/issues/709#issuecomment-2657325194">2月でにInterop 2025のフォーカス対象としてようやく採用</a>されました。その後、2025年12月にSafari、2026年1月にFirefoxで実装され、全主要ブラウザ対応を果たしました。さらにInterop 2025で実装が完了しなかった部分の対応として、2026年2月にInterop 2026のフォーカス対象としても採用されています。</p>
+<p>そして2026年3月のTypeScript 6.0のリリースより、TypeScript標準でNavigation APIの型定義が使用可能になりました。</p>
+<blockquote class="twitter-tweet"><p lang="ja" dir="ltr">TypeScript 6.0からDOM APIを最新の情報に追従していく流れで、Navigation APIの型定義がTypeScript 6.0から正式に使えるようになっています🥳<br>クライアントルーティングライブラリのNavigation API採用の足掛けになるといいなと思っています🙌 <a href="https://t.co/I2SzGllTjv">https://t.co/I2SzGllTjv</a> <a href="https://t.co/gVRV0FkoXh">pic.twitter.com/gVRV0FkoXh</a></p>&mdash; やまのく🐶 (@yamanoku) <a href="https://twitter.com/yamanoku/status/2030231197813751963?ref_src=twsrc%5Etfw">March 7, 2026</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+<p>Web APIは「<a href="https://web.dev/baseline?hl=ja">Baseline</a>」という指標でクロスブラウザ対応状況が示されます。現在はNewly Avaibaleで最新版ブラウザのみの対応となっていますが、2028年7月にはBaseline Widely Availableとなり一般的に安定して使えるようになっている状況とされています。</p>
+<p>というわけでNavigation APIが最新版ブラウザで安定的に使えるようになり、TypeScriptでも型が使えるようになった現在、私としては今後使われて行ってほしいなと思っております。</p>
+<p>uhyoさん作の<a href="https://github.com/uhyo/funstack-router/">FUNSTACK Router</a>や、<a href="https://angular.jp/api/router/withExperimentalPlatformNavigation">Angular</a>や<a href="https://github.com/vuejs/router/pull/2551">Vue Router</a>といった一部ルーターライブラリの実験的機能・実装中のサポートなど、すでにNavigation APIを活用したエコシステムも育ってきています。View Transitions APIと組み合わせたページ遷移表現も考えられそうなので遷移アニメーションの表現の幅も広がるのではないかと思っております。</p>
+<p>まとめです。<code>lib.dom.d.ts</code>はTypeScript-DOM-lib-generatorによって生成されています。DOM APIでの型定義の採用基準は「2つ以上のブラウザエンジンでのサポート」です。Navigation APIはTypeScript 6.0より標準の型定義となりました。使いたいAPIの状況はBrowser-Compat-Dataで確認でき、より詳細な進捗はInteropやWeb Platform Testsで状況を調べてみるとよいかもしれません。</p>
+<h2>参考情報</h2>
+<ul>
+<li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Navigation_API">Navigation API - Web APIs | MDN</a></li>
+<li><a href="https://web-platform-dx.github.io/web-features-explorer/features/navigation/">Web platform features explorer - Navigation API</a></li>
+<li><a href="https://shoken3207.github.io/slides/2026-05-navigation-api/">Navigation <em>API.</em></a></li>
+<li><a href="https://scrapbox.io/yamanoku/%E3%81%B2%E3%81%A8%E3%82%8ANavigation_API_Advent_Calendar">ひとりNavigation API Advent Calendar</a></li>
+<li><a href="https://github.com/microsoft/TypeScript-DOM-lib-generator">TypeScript-DOM-lib-generator</a></li>
+<li><a href="https://github.com/mdn/browser-compat-data">Browser-Compat-Data</a></li>
+<li><a href="https://zenn.dev/keita_hino/articles/2f6c2a19978fa8">lib.dom.d.tsがどのように更新されるか調べてみた</a></li>
+<li><a href="https://zenn.dev/odan/scraps/d43356fdae48a2">TypeScript で Web API の利用を検知したい</a></li>
+</ul>
+
+        </main>
+        <footer>
+          <p>Copyright 2026, Okuto Oyama</p>
+          <p>Source : <a href="https://github.com/yamanoku/tskaigi-2026/" target="_blank">yamanoku/tskaigi-2026</a></p>
+        </footer>
+      </body>
+    </html>
+  
