@@ -1,13 +1,14 @@
 :root {
   --prism-font-size: 1.075rem;
+  --slidev-theme-primary: rgba(18, 122, 200);
 }
 
-.slidev-page-29 {
-  --prism-font-size: .875rem; 
+html.dark:root {
+  --slidev-theme-primary: rgba(220, 100, 220);
 }
 
-.slidev-page-42 {
-  --prism-font-size: 2rem; 
+.slidev-page-25 code {
+  font-size: 2rem;
 }
 
 .slidev-layout ul ul {
@@ -49,6 +50,10 @@
   font-weight: 700;
 }
 
+.slidev-layout a {
+  border-style: double;
+}
+
 .slidev-layout blockquote {
   font-size: 1.2rem;
 }
@@ -57,19 +62,9 @@
   margin-top: 1lh;
 }
 
-blockquote + .slidev-code-wrapper,
-.slidev-code-wrapper + .slidev-code-wrapper {
-  margin-top: 1lh !important;
-}
-
 .place-content-center {
   place-content: unset !important;
   align-items: center;
-}
-.slidev-page-6 .place-content-center,
-.slidev-page-13 .place-content-center,
-.slidev-page-42 .place-content-center {
-  place-content: center !important;
 }
 
 .slidev-layout blockquote {
@@ -91,6 +86,10 @@ blockquote + .slidev-code-wrapper,
   border-color: rgba(21, 32, 43);
 }
 
-.dark .slidev-layout thead {
+html.dark .slidev-layout tr {
+  border-color: rgba(210, 210, 210);
+}
+
+html.dark .slidev-layout thead {
   color: black
 }

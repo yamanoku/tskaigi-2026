@@ -19,4 +19,5 @@ catalogs:
     "@slidev/cli": 52.15.1
     "@slidev/theme-default": 0.25.0
     '@slidev/theme-apple-basic': 0.25.1
+    "@iconify-json/vscode-icons": 1.2.50
     vue: 3.5.34

@@ -11,6 +11,7 @@
     "@slidev/cli": "catalog:slidev",
     "@slidev/theme-default": "catalog:slidev",
     "@slidev/theme-apple-basic": "catalog:slidev",
+    "@iconify-json/vscode-icons": "catalog:slidev",
     "vue": "catalog:slidev"
   }
 }
