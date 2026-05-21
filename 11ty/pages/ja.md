@@ -157,7 +157,7 @@ bun add -d @typescript/lib-dom@npm:@types/web
 
 <blockquote class="twitter-tweet"><p lang="ja" dir="ltr">TypeScript 6.0からDOM APIを最新の情報に追従していく流れで、Navigation APIの型定義がTypeScript 6.0から正式に使えるようになっています🥳<br>クライアントルーティングライブラリのNavigation API採用の足掛けになるといいなと思っています🙌 <a href="https://t.co/I2SzGllTjv">https://t.co/I2SzGllTjv</a> <a href="https://t.co/gVRV0FkoXh">pic.twitter.com/gVRV0FkoXh</a></p>&mdash; やまのく🐶 (@yamanoku) <a href="https://twitter.com/yamanoku/status/2030231197813751963?ref_src=twsrc%5Etfw">March 7, 2026</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
-Web APIは「[Baseline](https://web.dev/baseline?hl=ja)」という指標でクロスブラウザ対応状況が示されます。現在はNewly Avaibaleで最新版ブラウザのみの対応となっていますが、2028年7月にはBaseline Widely Availableとなり一般的に安定して使えるようになっている状況とされています。
+Web APIは「[Baseline](https://web.dev/baseline?hl=ja)」という指標でクロスブラウザ対応状況が示されます。現在はBaseline Newly Avaibaleで最新版ブラウザのみの対応となっていますが、2028年7月にはBaseline Widely Availableとなり一般的に安定して使えるようになっている状況とされています。
 
 というわけでNavigation APIが最新版ブラウザで安定的に使えるようになり、TypeScriptでも型が使えるようになった現在、私としては今後使われて行ってほしいなと思っております。
 
