@@ -23,6 +23,8 @@
         <main id="main">
           <h1><span style="word-break:keep-all;overflow-wrap:anywhere">Navigation APIが​lib.dom.d.tsに​採用されるまでの​道のり</span></h1>
           <p><img src="../images/title-ja.png" alt="スライドタイトル：Navigation APIがlib.dom.d.tsに採用されるまでの道のり"></p>
+<h2>スライド</h2>
+<p><a href="https://yamanoku.net/tskaigi-2026/slide/">発表スライド</a></p>
 <h2>翻訳記事一覧</h2>
 <p><a href="https://yamanoku.net/tskaigi-2026/ja/">日本語ページ</a> / <a href="https://yamanoku.net/tskaigi-2026/en/">English page</a></p>
 <h2>発表概要</h2>
@@ -233,7 +235,7 @@ bun add -d @typescript/lib-dom@npm:@types/web
 <p>転機となったのは2025年で、<a href="https://github.com/web-platform-tests/interop/issues/709#issuecomment-2657325194">2月でにInterop 2025のフォーカス対象としてようやく採用</a>されました。その後、2025年12月にSafari、2026年1月にFirefoxで実装され、全主要ブラウザ対応を果たしました。さらにInterop 2025で実装が完了しなかった部分の対応として、2026年2月にInterop 2026のフォーカス対象としても採用されています。</p>
 <p>そして2026年3月のTypeScript 6.0のリリースより、TypeScript標準でNavigation APIの型定義が使用可能になりました。</p>
 <blockquote class="twitter-tweet"><p lang="ja" dir="ltr">TypeScript 6.0からDOM APIを最新の情報に追従していく流れで、Navigation APIの型定義がTypeScript 6.0から正式に使えるようになっています🥳<br>クライアントルーティングライブラリのNavigation API採用の足掛けになるといいなと思っています🙌 <a href="https://t.co/I2SzGllTjv">https://t.co/I2SzGllTjv</a> <a href="https://t.co/gVRV0FkoXh">pic.twitter.com/gVRV0FkoXh</a></p>&mdash; やまのく🐶 (@yamanoku) <a href="https://twitter.com/yamanoku/status/2030231197813751963?ref_src=twsrc%5Etfw">March 7, 2026</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-<p>Web APIは「<a href="https://web.dev/baseline?hl=ja">Baseline</a>」という指標でクロスブラウザ対応状況が示されます。現在はNewly Avaibaleで最新版ブラウザのみの対応となっていますが、2028年7月にはBaseline Widely Availableとなり一般的に安定して使えるようになっている状況とされています。</p>
+<p>Web APIは「<a href="https://web.dev/baseline?hl=ja">Baseline</a>」という指標でクロスブラウザ対応状況が示されます。現在はBaseline Newly Avaibaleで最新版ブラウザのみの対応となっていますが、2028年7月にはBaseline Widely Availableとなり一般的に安定して使えるようになっている状況とされています。</p>
 <p>というわけでNavigation APIが最新版ブラウザで安定的に使えるようになり、TypeScriptでも型が使えるようになった現在、私としては今後使われて行ってほしいなと思っております。</p>
 <p>uhyoさん作の<a href="https://github.com/uhyo/funstack-router/">FUNSTACK Router</a>や、<a href="https://angular.jp/api/router/withExperimentalPlatformNavigation">Angular</a>や<a href="https://github.com/vuejs/router/pull/2551">Vue Router</a>といった一部ルーターライブラリの実験的機能・実装中のサポートなど、すでにNavigation APIを活用したエコシステムも育ってきています。View Transitions APIと組み合わせたページ遷移表現も考えられそうなので遷移アニメーションの表現の幅も広がるのではないかと思っております。</p>
 <p>まとめです。<code>lib.dom.d.ts</code>はTypeScript-DOM-lib-generatorによって生成されています。DOM APIでの型定義の採用基準は「2つ以上のブラウザエンジンでのサポート」です。Navigation APIはTypeScript 6.0より標準の型定義となりました。使いたいAPIの状況はBrowser-Compat-Dataで確認でき、より詳細な進捗はInteropやWeb Platform Testsで状況を調べてみるとよいかもしれません。</p>
