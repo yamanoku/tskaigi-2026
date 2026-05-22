@@ -29,12 +29,19 @@ TSKaigi 2026 | <time datetime="2026-05-22">2026-05-22</time>
   </span>
 </div>
 
+<!--
+本日はNavigation APIがTypeScriptの型定義に採用されるまでの道のりについてをお話しします。Web標準の技術が、どのようにしてTypeScriptの『型』として私たちの手元に届くのかをご紹介します。
+-->
 
 ---
 layout: section
 ---
 
 # Navigation APIについて
+
+<!--
+まずはじめに、皆さんはNavigation APIをご存じでしょうか？
+-->
 
 ---
 
@@ -111,6 +118,10 @@ layout: section
 
 # TypeScript環境での問題
 
+<!--
+非常に便利になったNavigation API、これをTypeScript環境で使おうとしたときにある問題が発生しました。
+-->
+
 ---
 
 ## 型定義がない！
@@ -121,7 +132,8 @@ Navigation API を TypeScript 5.9で使おうとすると...
 // TypeScript 5.9 までは型エラー
 window.navigation.navigate('/new-page');
 //     ^^^^^^^^^^
-// lib.dom.d.ts(38511, 13): 'navigator' is declared here.
+// Property 'navigation' does not exist on type 'Window & typeof globalThis'.
+// Did you mean 'navigator'?
 ```
 Navigation API の型定義が存在しなかった。
 
@@ -159,6 +171,10 @@ bun add -d @types/dom-navigation
 ```
 
 ::
+
+<!--
+まずはディフィニトリータイプを利用することです
+-->
 
 ---
 
