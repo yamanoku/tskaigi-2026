@@ -20,8 +20,7 @@ htmlAttrs:
 TSKaigi 2026 | <time datetime="2026-05-22">2026-05-22</time>
 </div>
 
-- [ドキュメントページ版（日本語）](https://yamanoku.net/tskaigi-2026/ja/)
-- [Document Page Version（English）](https://yamanoku.net/tskaigi-2026/en/)
+[ドキュメントページ版（日本語）](https://yamanoku.net/tskaigi-2026/ja/) | [Document Page Version（English）](https://yamanoku.net/tskaigi-2026/en/) | [문서 페이지 버전（한국어）](https://yamanoku.net/tskaigi-2026/ko/)
 
 <div class="absolute bottom-16">
   <span class="text-6 font-700">
