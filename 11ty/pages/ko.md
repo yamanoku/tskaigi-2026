@@ -1,9 +1,11 @@
 ---
 layout: layout
 title: "Navigation API가 lib.dom.d.ts에 채택되기까지의 여정"
-description: TSKaigi 2026에서 yamanoku의 발표 자료
+description: TSKaigi 2026에서 야마노쿠(yamanoku)의 발표 자료
 lang: ko
 ---
+
+![슬라이드 타이틀: Navigation API가 lib.dom.d.ts에 채택되기까지의 여정](../images/title-ko.png)
 
 ## 슬라이드
 
@@ -19,11 +21,11 @@ lang: ko
 
 SPA의 클라이언트 사이드 라우팅을 구현하기 위해 사용되는 History API의 후속 Web API입니다. 지난해 Interop 프로젝트에서의 채택을 거쳐 올해 1월부터 모든 주요 브라우저에서 사용할 수 있게 되었습니다.
 
-이러한 최신 Web API를 사용하려고 했더니 타입이 정의되어 있지 않아서, 직접 `interface Window`를 확장해 본 경험이 있으신가요?
+이처럼 최신 Web API를 사용하려는데 타입이 정의되어 있지 않아, 직접 `interface Window`를 확장해 본 경험이 있으신가요?
 
 본 세션에서는 Navigation API의 개요를 소개하면서, 우리가 평소에 사용하는 DOM API가 어떤 과정을 거쳐 TypeScript의 타입 정의(lib.dom.d.ts)에 채택되는지를 설명합니다.
 
-이 발표를 통해 Web 표준 기술이 "타입"으로 전달되기까지의 이면을 이해하고, 최신 기술을 보다 안전하고 깊이 있게 다룰 수 있게 되기를 바랍니다.
+이번 발표를 통해 Web 표준 기술이 "타입"으로 전달되기까지의 이면을 이해하고, 최신 기술을 보다 안전하고 깊이 있게 다룰 수 있게 되기를 바랍니다.
 
 ## 슬라이드 내용
 
@@ -31,7 +33,7 @@ SPA의 클라이언트 사이드 라우팅을 구현하기 위해 사용되는 H
 
 먼저, 여러분은 Navigation API를 알고 계신가요?
 
-Navigation API는 SPA의 클라이언트 사이드 라우팅을 구현하기 위한 History API의 후속 DOM API입니다. 기존 History API는 유연성이 부족하고 OS 고유의 제약으로 다루기 어려운 면이 있었습니다. Navigation API는 이러한 문제를 해결하고 더 유연한 클라이언트 사이드 라우팅을 실현합니다. 2026년 1월에 모든 주요 브라우저에서 사용 가능하게 되었습니다.
+Navigation API는 SPA의 클라이언트 사이드 라우팅을 구현하기 위한 History API의 후속 DOM API입니다. 기존 History API는 유연성이 부족하고 OS 고유의 제약으로 다루기 어려운 면이 있었습니다. Navigation API는 이러한 문제를 해결하고 더 유연한 클라이언트 사이드 라우팅을 실현합니다. 2026년 1월을 기점으로 모든 주요 브라우저에서 사용 가능하게 되었습니다.
 
 <baseline-status style="border: 1px solid" featureId="navigation"></baseline-status>
 
@@ -71,13 +73,13 @@ navigation.addEventListener('currententrychange', () => {
 });
 ```
 
-매우 편리해진 Navigation API를 TypeScript 환경에서 사용하려고 했을 때 한 가지 문제가 발생했습니다.
+이토록 편리해진 Navigation API를 TypeScript 환경에서 사용하려고 했을 때 한 가지 문제가 발생했습니다.
 
 바로 TypeScript 5.9까지 Navigation API의 타입 정의가 TypeScript 자체에 존재하지 않았다는 것입니다. 새로운 DOM API를 시도하려다 이 벽에 부딪힌 경험이 있으신 분도 계실 것입니다.
 
 DOM API의 타입 정의가 없는 경우, 몇 가지 접근 방법이 있습니다.
 
-먼저 DefinitelyTyped를 이용하는 것입니다. Navigation API의 경우 [`@types/dom-navigation`](https://www.npmjs.com/package/@types/dom-navigation)이라는 패키지가 존재했습니다.
+가장 먼저 DefinitelyTyped를 이용하는 것입니다. Navigation API의 경우 [`@types/dom-navigation`](https://www.npmjs.com/package/@types/dom-navigation)이라는 패키지가 존재했습니다.
 
 ```sh
 npm i -D @types/dom-navigation
@@ -136,13 +138,13 @@ TypeScript의 타입 정의가 어떻게 채택되는지 이해하셨나요? 마
 | 연도 | 사건 |
 |---|---|
 | 2022년 5월 | Chrome / Edge에서 구현 완료 |
-| 2023년 10월 | Interop 2023 신청 불채택 |
+| 2022년 10월 | Interop 2023 신청 불채택 |
 | 2023년 3월 | TypeScript 리포지토리에 지원 요청 Issue 등장 |
 | 2023년 9월 | Interop 2024 신청 불채택 |
 | 2025년 2월 | Interop 2025의 포커스 대상으로 채택 |
 | 2025년 12월 | Safari에서 Navigation API 구현 |
 | 2026년 1월 | Firefox에서 Navigation API 구현 |
-| 2026년 1월 | Navigation API가 Baseline Newly Available로 |
+| 2026년 1월 | Navigation API가 Baseline Newly Available 등재 |
 | 2026년 2월 | Interop 2026의 포커스 대상으로 채택 |
 | 2026년 3월 | TypeScript 6.0에서 Navigation API 타입 정의 추가 |
 | 2028년 7월 | Navigation API가 Baseline Widely Available이 될 전망 |
