@@ -138,7 +138,7 @@ Now that we understand how TypeScript type definitions are adopted, let us look 
 | Year | Event |
 |---|---|
 | May 2022 | Implementation completed in Chrome / Edge |
-| October 2023 | Application to Interop 2023 not accepted |
+| October 2022 | Application to Interop 2023 not accepted |
 | March 2023 | Issue requesting support filed in TypeScript repository |
 | September 2023 | Application to Interop 2024 not accepted |
 | February 2025 | Adopted as a focus area for Interop 2025 |
