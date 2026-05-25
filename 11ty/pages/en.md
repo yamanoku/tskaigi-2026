@@ -13,7 +13,7 @@ lang: en
 
 ## Translation Articles
 
-[English page](https://yamanoku.net/tskaigi-2026/en/) / [日本語ページ](https://yamanoku.net/tskaigi-2026/ja/)
+[English page](https://yamanoku.net/tskaigi-2026/en/) / [日本語ページ](https://yamanoku.net/tskaigi-2026/ja/) / [한국어 페이지](https://yamanoku.net/tskaigi-2026/ko/)
 
 ## Presentation Summary
 

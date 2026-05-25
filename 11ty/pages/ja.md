@@ -13,7 +13,7 @@ lang: ja
 
 ## 翻訳記事一覧
 
-[日本語ページ](https://yamanoku.net/tskaigi-2026/ja/) / [English page](https://yamanoku.net/tskaigi-2026/en/)
+[日本語ページ](https://yamanoku.net/tskaigi-2026/ja/) / [English page](https://yamanoku.net/tskaigi-2026/en/) / [한국어 페이지](https://yamanoku.net/tskaigi-2026/ko/)
 
 ## 発表概要
 
