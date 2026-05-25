@@ -8,6 +8,10 @@ I spoke at [TSKaigi 2026](https://2026.tskaigi.org/) on May 22-23, 2026. This si
 
 [English Page](https://yamanoku.net/tskaigi-2026/en/)
 
+2026년5월22일~23일에 개최된 [TSKaigi 2026](https://2026.tskaigi.org/)에서 발표했습니다. 이 사이트는 발표 내용을 텍스트로 정리한 것입니다.
+
+[한국어 페이지](https://yamanoku.net/tskaigi-2026/ko/)
+
 ## スライド（日本語のみ）
 
 https://yamanoku.net/tskaigi-2026/slide/
