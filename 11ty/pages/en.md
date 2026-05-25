@@ -13,7 +13,7 @@ lang: en
 
 ## Translation Articles
 
-[English page](https://yamanoku.net/tskaigi-2026/en/) / [日本語ページ](https://yamanoku.net/tskaigi-2026/ja/)
+[English page](https://yamanoku.net/tskaigi-2026/en/) / [日本語ページ](https://yamanoku.net/tskaigi-2026/ja/) / [한국어 페이지](https://yamanoku.net/tskaigi-2026/ko/)
 
 ## Presentation Summary
 
@@ -138,7 +138,7 @@ Now that we understand how TypeScript type definitions are adopted, let us look 
 | Year | Event |
 |---|---|
 | May 2022 | Implementation completed in Chrome / Edge |
-| October 2023 | Application to Interop 2023 not accepted |
+| October 2022 | Application to Interop 2023 not accepted |
 | March 2023 | Issue requesting support filed in TypeScript repository |
 | September 2023 | Application to Interop 2024 not accepted |
 | February 2025 | Adopted as a focus area for Interop 2025 |

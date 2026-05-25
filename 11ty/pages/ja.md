@@ -13,7 +13,7 @@ lang: ja
 
 ## 翻訳記事一覧
 
-[日本語ページ](https://yamanoku.net/tskaigi-2026/ja/) / [English page](https://yamanoku.net/tskaigi-2026/en/)
+[日本語ページ](https://yamanoku.net/tskaigi-2026/ja/) / [English page](https://yamanoku.net/tskaigi-2026/en/) / [한국어 페이지](https://yamanoku.net/tskaigi-2026/ko/)
 
 ## 発表概要
 
@@ -138,7 +138,7 @@ bun add -d @typescript/lib-dom@npm:@types/web
 | 年 | 出来事 |
 |---|---|
 | 2022年5月 | Chrome / Edgeで実装完了 |
-| 2023年10月 | Interop 2023 への申請も採用ならず |
+| 2022年10月 | Interop 2023 への申請も採用ならず |
 | 2023年3月 | TypeScript側のリポジトリにサポート要望のIssueが登場 |
 | 2023年9月 | Interop 2024 への申請も採用ならず |
 | 2025年2月 | Interop 2025のフォーカス対象として採用 |
