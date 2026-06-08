@@ -16,7 +16,7 @@ catalogs:
   root:
     gh-pages: 6.3.0
   slidev:
-    "@slidev/cli": 52.15.2
+    "@slidev/cli": 52.16.0
     "@slidev/theme-default": 0.25.0
     '@slidev/theme-apple-basic': 0.25.1
     "@iconify-json/vscode-icons": 1.2.53
